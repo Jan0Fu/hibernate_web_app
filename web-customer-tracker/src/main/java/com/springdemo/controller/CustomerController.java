@@ -10,13 +10,18 @@ import com.springdemo.model.Customer;
 import com.springdemo.service.CustomerService;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping("/list")
+    @RequestMapping("/")
+    public String homepage() {
+        return "redirect:/customer/list";
+    }
+
+    @RequestMapping("/customer/list")
     public String listCustomers(Model theModel) {
         List<Customer> theCustomers = customerService.allCustomers();
         theModel.addAttribute("customers", theCustomers);
