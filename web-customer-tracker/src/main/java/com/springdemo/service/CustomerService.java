@@ -1,6 +1,5 @@
 package com.springdemo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,11 @@ public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public List<Customer> allCustomers() {
-        Iterable<Customer> source = customerRepository.findAll();
-        List<Customer> customers = new ArrayList<>();
-        source.forEach(customers::add);
-        return customers;
+    public List<Customer> getCustomers() {
+        return customerRepository.findByOrderByLastNameAsc();
+    }
+
+    public void saveCustomer(Customer theCustomer) {
+        customerRepository.save(theCustomer);
     }
 }
