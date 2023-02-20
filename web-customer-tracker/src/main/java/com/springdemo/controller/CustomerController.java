@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springdemo.model.Customer;
 import com.springdemo.service.CustomerService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/customer")
 public class CustomerController {
 
     @Autowired
@@ -24,23 +26,31 @@ public class CustomerController {
         return "redirect:/customer/list";
     }
 
-    @GetMapping("/customer/list")
+    @GetMapping("/list")
     public String listCustomers(Model theModel) {
         List<Customer> theCustomers = customerService.getCustomers();
         theModel.addAttribute("customers", theCustomers);
         return "list-customers";
     }
 
-    @GetMapping("/customer/showFormForAdd")
+    @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
         Customer theCustomer = new Customer();
         theModel.addAttribute("customer", theCustomer);
         return "customer-form";
     }
 
-    @PostMapping("/customer/saveCustomer")
+    @PostMapping("/saveCustomer")
     public String saveCustomer(@ModelAttribute("customer") Customer theCustomer) {
         customerService.saveCustomer(theCustomer);
         return "redirect:/customer/list";
     }
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("customerId") int theId, Model theModel) {
+        Customer customer = customerService.getCustomer(theId);
+        theModel.addAttribute("customer", customer);
+        return "customer-form";
+    }
+
 }

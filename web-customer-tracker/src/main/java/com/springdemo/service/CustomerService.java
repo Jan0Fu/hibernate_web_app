@@ -18,6 +18,10 @@ public class CustomerService {
         return customerRepository.findByOrderByLastNameAsc();
     }
 
+    public Customer getCustomer(int theId) {
+        return customerRepository.getReferenceById(theId);
+    }
+
     public void saveCustomer(Customer theCustomer) {
         customerRepository.save(theCustomer);
     }
